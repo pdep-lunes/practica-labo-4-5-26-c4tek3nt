@@ -1,7 +1,7 @@
 module Parcial where
 import Text.Show.Functions()
 
-data Perrito = unPerro {
+data Perrito = UnPerro {
     raza :: String,
     jueguetesFavs :: [String],
     tiempoEnGuarderiaEnMinutos :: Int,
@@ -14,30 +14,31 @@ type TiempoEnMinutos = Int
 
 --Modelos
 zara :: Perrito
-zara = unPerro "Dalmata" ["Pelota", "Mantita"] 90 80
+zara = UnPerro "Dalmata" ["Pelota", "Mantita"] 90 80
 
 guarderiaPdePerritos :: Guarderia
 guarderiaPdePerritos = ([jugar, ladrar 18, regalar "Pelota", diaDeSpa, diaDeCampo], 30 + 20 + 0 + 120 + 720)
 
 --Funciones
 jugar :: Actividad
-jugar (unPerro raza juguetes tiempo energia) = unPerro raza juguetes tiempo (max 0 (energia - 10))
+jugar (UnPerro raza juguetes tiempo energia) = UnPerro raza juguetes tiempo (max 0 (energia - 10))
 
-ladrar :: Number -> Actividad
-ladrar cantLadridos (unPerro raza juguetes tiempo energia) = unPerro raza juguetes tiempo (energia + (cantLadridos/2))
+ladrar :: Int -> Actividad
+ladrar cantLadridos (UnPerro raza juguetes tiempo energia) = UnPerro raza juguetes tiempo (energia + (cantLadridos `div` 2))
 
 regalar :: String -> Actividad
-regalar nuevoJuguete (unPerro raza juguetes tiempo energia) = unPerro raza (nuevoJuguete : juguetes) tiempo energia
+regalar nuevoJuguete (UnPerro raza juguetes tiempo energia) = UnPerro raza (nuevoJuguete : juguetes) tiempo energia
 
 diaDeSpa :: Actividad 
-diaDeSpa (unPerro raza juguetes tiempo energia) 
-    | tiempo >= 50 || razaExtravagante raza = regalar "peineDeGoma" (unPerro raza juguetes tiempo 100)
+diaDeSpa (UnPerro raza juguetes tiempo energia) 
+    | tiempo >= 50 || razaExtravagante raza = regalar "peineDeGoma" (UnPerro raza juguetes tiempo 100)
+    | otherwise = UnPerro raza juguetes tiempo energia
 
 razaExtravagante :: String -> Bool
 razaExtravagante raza = raza == "Dalmata" || raza == "Pomerania"
 
 diaDeCampo :: Actividad
-diaDeCampo  (unPerro raza juguetes tiempo energia) = unPerro raza (perderPrimerJuguete juguetes) tiempo energia
+diaDeCampo  (UnPerro raza juguetes tiempo energia) = UnPerro raza (perderPrimerJuguete juguetes) tiempo energia
 
 perderPrimerJuguete :: [String] -> [String]
 perderPrimerJuguete [] = []
