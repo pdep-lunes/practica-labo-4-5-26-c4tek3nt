@@ -43,3 +43,9 @@ diaDeCampo  (UnPerro raza juguetes tiempo energia) = UnPerro raza (perderPrimerJ
 perderPrimerJuguete :: [String] -> [String]
 perderPrimerJuguete [] = []
 perderPrimerJuguete (_ : resto) = resto
+
+puedeEstarEnGuarderia :: Perrito -> Guarderia -> Bool
+puedeEstarEnGuarderia (UnPerro _ _ tiempo _) (_, tiempoRutina) = tiempo > tiempoRutina
+
+perrosResponsables :: Perrito -> Bool
+perrosResponsables perro = length (jueguetesFavs (diaDeCampo perro)) > 3
