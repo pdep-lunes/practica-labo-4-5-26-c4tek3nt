@@ -21,13 +21,13 @@ guarderiaPdePerritos = ([jugar, ladrar 18, regalar "Pelota", diaDeSpa, diaDeCamp
 
 --Funciones
 jugar :: Actividad
-jugar (UnPerro raza juguetes tiempo energia) = UnPerro raza juguetes tiempo (max 0 (energia - 10))
+jugar perro = perro { energia = max 0 (energia perro - 10) }
 
 ladrar :: Int -> Actividad
-ladrar cantLadridos (UnPerro raza juguetes tiempo energia) = UnPerro raza juguetes tiempo (energia + (cantLadridos `div` 2))
+ladrar cantLadridos perro = perro { energia = energia + (cantLadridos `div` 2) }
 
 regalar :: String -> Actividad
-regalar nuevoJuguete (UnPerro raza juguetes tiempo energia) = UnPerro raza (nuevoJuguete : juguetes) tiempo energia
+regalar nuevoJuguete perro = perro { juguetesFavs = (nuevoJuguete : juguetesFavs)}
 
 diaDeSpa :: Actividad 
 diaDeSpa (UnPerro raza juguetes tiempo energia) 
